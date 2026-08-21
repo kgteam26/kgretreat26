@@ -1,3 +1,8 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>2026 Retreat – Weakness to Goodness</title>
 <style>
   :root {
@@ -55,6 +60,8 @@
 
   * { box-sizing: border-box; }
 
+  html, body { height: 100%; }
+
   body {
     margin: 0;
     background: var(--paper);
@@ -63,7 +70,10 @@
     -webkit-font-smoothing: antialiased;
     max-width: 560px;
     margin-inline: auto;
-    padding-bottom: 76px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -384,17 +394,12 @@
 
   /* Bottom tab bar */
   .bottom-tabs {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    max-width: 560px;
-    margin-inline: auto;
+    flex-shrink: 0;
+    margin-top: auto;
     display: flex;
     background: var(--card);
     border-top: 1px solid var(--line);
     padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
-    z-index: 20;
   }
   .bottom-tab {
     flex: 1;
@@ -425,6 +430,8 @@
   }
   .bottom-tab[aria-selected="true"] .dot { opacity: 1; }
 </style>
+</head>
+<body>
 
 <div class="hero">
   <svg viewBox="0 0 400 148" preserveAspectRatio="none" aria-hidden="true">
@@ -911,3 +918,5 @@
   const initialView = location.hash === "#/devotionals" ? "devotionals" : "schedule";
   setView(initialView);
 </script>
+</body>
+</html>
