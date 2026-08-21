@@ -1,1 +1,913 @@
-hello world! kgretreat
+<title>2026 Retreat – Weakness to Goodness</title>
+<style>
+  :root {
+    --paper: #F5EFE1;
+    --card: #FBF7EC;
+    --ink: #24303B;
+    --muted: #6E7A72;
+    --line: #DED2B4;
+    --accent: #1E7A8C;
+    --accent-warm: #D97D3D;
+    --sky-top: #DCEBEC;
+    --hill-1: #B9C9CE;
+    --hill-2: #7FA3AC;
+    --hill-3: #2F5C66;
+    --sun: #D97D3D;
+    --snow: #FBFBF6;
+    --shadow: rgba(36, 48, 59, 0.08);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #151B1F;
+      --card: #1E262B;
+      --ink: #EAE5D4;
+      --muted: #8FA099;
+      --line: #2B3439;
+      --accent: #4FB8CC;
+      --accent-warm: #F0A55E;
+      --sky-top: #0A1316;
+      --hill-1: #1B2E33;
+      --hill-2: #14262A;
+      --hill-3: #0F1E20;
+      --sun: #E8E3D2;
+      --snow: #C9D6D3;
+      --shadow: rgba(0, 0, 0, 0.35);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper: #151B1F;
+    --card: #1E262B;
+    --ink: #EAE5D4;
+    --muted: #8FA099;
+    --line: #2B3439;
+    --accent: #4FB8CC;
+    --accent-warm: #F0A55E;
+    --sky-top: #0A1316;
+    --hill-1: #1B2E33;
+    --hill-2: #14262A;
+    --hill-3: #0F1E20;
+    --sun: #E8E3D2;
+    --snow: #C9D6D3;
+    --shadow: rgba(0, 0, 0, 0.35);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    max-width: 560px;
+    margin-inline: auto;
+    padding-bottom: 76px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+
+  .hero {
+    position: relative;
+    height: 148px;
+    overflow: hidden;
+    background: var(--sky-top);
+  }
+
+  .hero svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .hill-1 { fill: var(--hill-1); }
+  .hill-2 { fill: var(--hill-2); }
+  .hill-3 { fill: var(--hill-3); }
+  .snow { fill: var(--snow); opacity: 0.85; }
+  .sun { fill: var(--sun); opacity: 0.9; }
+
+  header.masthead {
+    padding: 18px 20px 22px;
+  }
+
+  .masthead-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .eyebrow {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  .lang-toggle {
+    flex: 0 0 auto;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+  }
+  .lang-toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  h1 {
+    margin: 0.2rem 0 0.15rem;
+    font-size: clamp(1.7rem, 6vw, 2.1rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  .date-range {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  nav.day-tabs {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav.day-tabs::-webkit-scrollbar { display: none; }
+
+  .day-tab {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .day-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .day-tab .wd {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+  .day-tab .num {
+    font-size: 1.05rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .day-tab[aria-selected="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper);
+  }
+  .day-tab[aria-selected="true"] .wd { opacity: 0.85; }
+
+  main {
+    padding: 22px 20px 48px;
+  }
+
+  .day-label {
+    margin: 0 0 18px;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  .timeline {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 0 22px;
+  }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--line);
+  }
+
+  .event {
+    position: relative;
+    padding-bottom: 20px;
+  }
+  .event:last-child { padding-bottom: 0; }
+
+  .event::before {
+    content: "";
+    position: absolute;
+    left: -22px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--dot, var(--muted));
+    border: 2px solid var(--paper);
+  }
+
+  .event .time {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.01em;
+  }
+
+  .event .title {
+    margin-top: 2px;
+    font-size: 1.02rem;
+    font-weight: 600;
+    line-height: 1.35;
+    text-wrap: balance;
+  }
+
+  .legend {
+    display: flex;
+    gap: 16px;
+    margin: 18px 0 0;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+  .view { animation: fade-in 0.2s ease; }
+  .view[hidden] { display: none; }
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Devotionals */
+  .type-toggle {
+    display: flex;
+    gap: 8px;
+    padding: 4px 20px 16px;
+  }
+  .type-btn {
+    flex: 1;
+    padding: 9px 8px;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    font-family: inherit;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .type-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .type-btn[aria-selected="true"] {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper);
+  }
+  .type-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .devo-card { padding: 4px 20px 0; }
+
+  .devo-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin: 0 0 6px;
+    text-wrap: balance;
+  }
+
+  .devo-scripture {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+  }
+
+  .devo-verses {
+    font-size: 1.02rem;
+    line-height: 1.85;
+    margin: 0 0 26px;
+    padding-left: 16px;
+    border-left: 3px solid var(--accent);
+  }
+  .vnum {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-right: 2px;
+  }
+
+  .devo-blanks {
+    list-style: none;
+    margin: 0 0 26px;
+    padding: 16px 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .devo-blanks li {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .blank {
+    display: inline-block;
+    min-width: 70px;
+    border-bottom: 1.5px dotted var(--muted);
+  }
+
+  .devo-questions {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .devo-questions li {
+    display: flex;
+    gap: 12px;
+    font-size: 0.96rem;
+    line-height: 1.6;
+  }
+  .qnum {
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--line);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-variant-numeric: tabular-nums;
+  }
+
+  footer {
+    padding: 0 20px 28px;
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-align: center;
+  }
+
+  /* Bottom tab bar */
+  .bottom-tabs {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    max-width: 560px;
+    margin-inline: auto;
+    display: flex;
+    background: var(--card);
+    border-top: 1px solid var(--line);
+    padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+    z-index: 20;
+  }
+  .bottom-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 0;
+    background: none;
+    border: none;
+    border-radius: 10px;
+    color: var(--muted);
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  .bottom-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .bottom-tab[aria-selected="true"] { color: var(--accent); }
+  .bottom-tab .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0;
+  }
+  .bottom-tab[aria-selected="true"] .dot { opacity: 1; }
+</style>
+
+<div class="hero">
+  <svg viewBox="0 0 400 148" preserveAspectRatio="none" aria-hidden="true">
+    <circle class="sun" cx="320" cy="42" r="24"></circle>
+    <path class="hill-1" d="M0,95 L40,80 L70,92 L110,68 L150,88 L190,72 L230,90 L270,75 L310,93 L350,78 L400,90 L400,148 L0,148 Z"></path>
+    <path class="hill-2" d="M0,115 L50,90 L90,108 L130,78 L170,102 L210,82 L250,106 L290,85 L330,110 L370,88 L400,104 L400,148 L0,148 Z"></path>
+    <path class="hill-3" d="M0,132 L45,100 L80,120 L120,90 L160,118 L200,95 L240,122 L280,98 L320,125 L360,102 L400,118 L400,148 L0,148 Z"></path>
+    <path class="snow" d="M113,98 L120,90 L127,98 Z"></path>
+    <path class="snow" d="M193,103 L200,95 L207,103 Z"></path>
+    <path class="snow" d="M273,106 L280,98 L287,106 Z"></path>
+  </svg>
+</div>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <p class="eyebrow" id="eyebrow">Retreat Schedule</p>
+    <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">RU</button>
+  </div>
+  <h1 id="retreatName">2026 Retreat – Weakness to Goodness</h1>
+  <p class="date-range" id="dateRange">August 24–27, 2026</p>
+</header>
+
+<section class="view" id="view-schedule">
+  <nav class="day-tabs" id="scheduleTabs" aria-label="Select a day"></nav>
+  <main id="scheduleMain"></main>
+</section>
+
+<section class="view" id="view-devotionals" hidden>
+  <nav class="day-tabs" id="devoTabs" aria-label="Select a day"></nav>
+  <div class="type-toggle" id="typeToggle">
+    <button class="type-btn" data-type="morning"><span>Morning</span></button>
+    <button class="type-btn" data-type="sermon"><span>Sermon Reflection</span></button>
+  </div>
+  <main id="devoMain"></main>
+</section>
+
+<footer id="footerText">Tap a day above, or switch pages below.</footer>
+
+<nav class="bottom-tabs" id="bottomTabs" aria-label="Booklet sections">
+  <button class="bottom-tab" data-view="schedule" aria-selected="true">
+    <span class="dot"></span><span class="label">Schedule</span>
+  </button>
+  <button class="bottom-tab" data-view="devotionals" aria-selected="false">
+    <span class="dot"></span><span class="label">Devotionals</span>
+  </button>
+</nav>
+
+<script>
+  const UI = {
+    en: {
+      eyebrowSchedule: "Retreat Schedule",
+      eyebrowDevotionals: "Devotionals",
+      retreatName: "2026 Retreat – Weakness to Goodness",
+      dateRange: "August 24–27, 2026",
+      footer: "Tap a day above, or switch pages below.",
+      tabSchedule: "Schedule",
+      tabDevotionals: "Devotionals",
+      typeMorning: "Morning",
+      typeSermon: "Sermon Reflection",
+      legendWorship: "Worship",
+      legendMeals: "Meals",
+      legendOther: "Sessions & activities"
+    },
+    ru: {
+      eyebrowSchedule: "Расписание лагеря",
+      eyebrowDevotionals: "Размышления",
+      retreatName: "Лагерь 2026 — От слабости к благости",
+      dateRange: "24–27 августа 2026",
+      footer: "Нажмите на день выше или переключите раздел ниже.",
+      tabSchedule: "Расписание",
+      tabDevotionals: "Размышления",
+      typeMorning: "Утро",
+      typeSermon: "После проповеди",
+      legendWorship: "Богослужение",
+      legendMeals: "Питание",
+      legendOther: "Занятия и мероприятия"
+    }
+  };
+
+  let LANG = "ru";
+
+  const DAYS = [
+    { date: "2026-08-24",
+      en: { name: "Monday", abbr: "MON", label: "Monday, Aug 24" },
+      ru: { name: "Понедельник", abbr: "ПН", label: "Понедельник, 24 августа" } },
+    { date: "2026-08-25",
+      en: { name: "Tuesday", abbr: "TUE", label: "Tuesday, Aug 25" },
+      ru: { name: "Вторник", abbr: "ВТ", label: "Вторник, 25 августа" } },
+    { date: "2026-08-26",
+      en: { name: "Wednesday", abbr: "WED", label: "Wednesday, Aug 26" },
+      ru: { name: "Среда", abbr: "СР", label: "Среда, 26 августа" } },
+    { date: "2026-08-27",
+      en: { name: "Thursday", abbr: "THU", label: "Thursday, Aug 27" },
+      ru: { name: "Четверг", abbr: "ЧТ", label: "Четверг, 27 августа" } }
+  ];
+
+  const SCHEDULE = {
+    "2026-08-24": [
+      { time: "16:00", endTime: "17:00", cat: "other",   en: "Check In", ru: "Заезд" },
+      { time: "17:00", endTime: "18:30", cat: "meal",    en: "Dinner", ru: "Ужин" },
+      { time: "18:30", endTime: "19:30", cat: "other",   en: "Orientation & Ice Breaking", ru: "Ориентация и знакомство" },
+      { time: "19:30", endTime: "21:00", cat: "worship", en: "Worship & Prayer", ru: "Прославление и молитва" },
+      { time: "21:00", endTime: null,    cat: "worship", en: "Small Group", ru: "Малые группы" }
+    ],
+    "2026-08-25": [
+      { time: "07:30", endTime: "08:30", cat: "worship", en: "Morning Praise w/ God", ru: "Утреннее прославление" },
+      { time: "08:30", endTime: "09:30", cat: "meal",    en: "Breakfast", ru: "Завтрак" },
+      { time: "09:30", endTime: "11:00", cat: "other",   en: "Essential Seminar", ru: "Семинар «Основы»" },
+      { time: "11:00", endTime: "11:30", cat: "other",   en: "Group Project Introduction", ru: "Введение в групповой проект" },
+      { time: "11:30", endTime: "13:00", cat: "meal",    en: "Lunch", ru: "Обед" },
+      { time: "13:00", endTime: "14:00", cat: "other",   en: "Dating Seminar", ru: "Семинар об отношениях" },
+      { time: "14:00", endTime: "15:00", cat: "other",   en: "Group Project", ru: "Групповой проект" },
+      { time: "15:00", endTime: "15:30", cat: "other",   en: "Break Time", ru: "Перерыв" },
+      { time: "15:30", endTime: "16:30", cat: "other",   en: "Arts & Craft", ru: "Творческая мастерская" },
+      { time: "16:30", endTime: "18:00", cat: "other",   en: "Activity", ru: "Мероприятие" },
+      { time: "18:00", endTime: "19:30", cat: "meal",    en: "Dinner", ru: "Ужин" },
+      { time: "19:30", endTime: "21:00", cat: "worship", en: "Worship", ru: "Прославление" },
+      { time: "21:00", endTime: "22:00", cat: "worship", en: "Small Group", ru: "Малые группы" },
+      { time: "22:00", endTime: null,    cat: "other",   en: "Movie Night", ru: "Вечер кино" }
+    ],
+    "2026-08-26": [
+      { time: "07:30", endTime: "08:30", cat: "worship", en: "Morning Praise w/ God", ru: "Утреннее прославление" },
+      { time: "08:30", endTime: "09:30", cat: "meal",    en: "Breakfast", ru: "Завтрак" },
+      { time: "09:30", endTime: "10:30", cat: "other",   en: "Grace Seminar", ru: "Семинар «Благодать»" },
+      { time: "10:30", endTime: "11:30", cat: "other",   en: "Group Project", ru: "Групповой проект" },
+      { time: "11:30", endTime: "13:00", cat: "meal",    en: "Lunch", ru: "Обед" },
+      { time: "13:00", endTime: "14:00", cat: "other",   en: "Stewardship Seminar", ru: "Семинар о стюардстве" },
+      { time: "14:00", endTime: "16:00", cat: "other",   en: "The Living Map", ru: "Живая карта" },
+      { time: "16:00", endTime: "17:30", cat: "other",   en: "Swimming Time", ru: "Плавание" },
+      { time: "17:30", endTime: "19:00", cat: "meal",    en: "Dinner", ru: "Ужин" },
+      { time: "19:00", endTime: "20:00", cat: "other",   en: "Presentation", ru: "Презентация" },
+      { time: "20:00", endTime: "22:00", cat: "worship", en: "Worship & Prayer Night", ru: "Вечер поклонения и молитвы" },
+      { time: "22:00", endTime: null,    cat: "other",   en: "Hang Out", ru: "Свободное общение" }
+    ],
+    "2026-08-27": [
+      { time: "08:00", endTime: "09:00", cat: "meal",    en: "Breakfast", ru: "Завтрак" },
+      { time: "09:00", endTime: "10:00", cat: "worship", en: "Worship & Prayer (Communion)", ru: "Прославление и молитва (Причастие)" },
+      { time: "10:00", endTime: null,    cat: "other",   en: "Sharing Time", ru: "Время свидетельств" }
+    ]
+  };
+
+  const DEVOTIONALS = {
+    "2026-08-24": {
+      morning: null,
+      sermon: {
+        en: {
+          title: "God Who Works Through the Weak",
+          scripture: "Judges 6:11-16",
+          blanks: [
+            "Because God sees us as great __________ (v.11-12)",
+            "Because God is always __________ (v.12-14)",
+            "Because God gives us power through __________ (v.15-16, 34)"
+          ],
+          questions: [
+            "What did you like most about the story of Gideon?",
+            "How would you describe yourself? (Brave, sensitive, fearful, prone to tears, etc.) Let's think about Gideon, Joseph, David, and others whom God used, and share what aspects of ourselves we would like to see changed.",
+            "God said He would be with Gideon (verse 12). When do you feel God's presence? What Bible verses help you realize that you are close to God?",
+            "God empowers us through the Holy Spirit (verse 34). Have you ever experienced the power of the Holy Spirit when you were weak? If there are areas in your life where you need the help of the Holy Spirit, let's share specific prayer requests."
+          ]
+        },
+        ru: {
+          title: "Бог, Который действует через слабых",
+          scripture: "Суд. 6:11–16",
+          blanks: [
+            "Потому что Бог видит нас великими __________ (ст. 11–12)",
+            "Потому что Бог всегда __________ (ст. 12–14)",
+            "Потому что Бог даёт нам силу через __________ (ст. 15–16, 34)"
+          ],
+          questions: [
+            "Что вам больше всего понравилось в истории о Гедеоне?",
+            "Как бы вы описали себя? (Смелый, чувствительный, боязливый, слезливый и т. д.) Подумаем о Гедеоне, Иосифе, Давиде и других, кого использовал Бог, и поделимся, какие черты в себе мы хотели бы изменить.",
+            "Бог сказал, что будет с Гедеоном (ст. 12). Когда вы чувствуете присутствие Божье? Какие библейские стихи помогают вам осознать, что вы близки к Богу?",
+            "Бог даёт нам силу через Святого Духа (ст. 34). Испытывали ли вы силу Святого Духа, когда были слабы? Если в вашей жизни есть области, где вам нужна помощь Святого Духа, поделимся конкретными молитвенными нуждами."
+          ]
+        }
+      }
+    },
+    "2026-08-25": {
+      morning: {
+        en: {
+          scripture: "Romans 8:26-28",
+          verses: [
+            { num: 26, text: "In the same way, the Spirit helps us in our weakness. We do not know what we ought to pray for, but the Spirit himself intercedes for us through wordless groans." },
+            { num: 27, text: "And he who searches our hearts knows the mind of the Spirit, because the Spirit intercedes for God’s people in accordance with the will of God." },
+            { num: 28, text: "And we know that in all things God works for the good of those who love him, who have been called according to his purpose." }
+          ],
+          questions: [
+            "How does the Spirit help us in our weakness?",
+            "What does the scripture mean when it says \"in all things\"?"
+          ]
+        },
+        ru: {
+          scripture: "Рим. 8:26–28",
+          verses: [
+            { num: 26, text: "Также и Дух помогает нам при всей нашей слабости. Мы не знаем даже, о чем нам следует молиться, но Дух Сам ходатайствует за нас вздохами, которые не могут быть выражены словами." },
+            { num: 27, text: "Тот, Кто исследует сердца, знает мысль Духа, потому что Дух ходатайствует за святых в согласии с Божьей волей." },
+            { num: 28, text: "Мы знаем, что Бог все обращает во благо для тех, кто любит Его и кого Он призвал по Своему замыслу." }
+          ],
+          questions: [
+            "Как Дух помогает нам в нашей слабости?",
+            "Что означают слова «Бог всё обращает во благо»?"
+          ]
+        }
+      },
+      sermon: null
+    },
+    "2026-08-26": {
+      morning: {
+        en: {
+          scripture: "James 1:2-4",
+          verses: [
+            { num: 2, text: "Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds," },
+            { num: 3, text: "because you know that the testing of your faith produces perseverance." },
+            { num: 4, text: "Let perseverance finish its work so that you may be mature and complete, not lacking anything." }
+          ],
+          questions: [
+            "Do you consider trials and hardship to be \"pure joy\"? Why does the scripture say to consider it \"pure joy\" when facing trials of many kinds?",
+            "How do trials produce perseverance? Have you experienced this before?",
+            "What does it mean to be \"mature and complete\", and why is this important?"
+          ]
+        },
+        ru: {
+          scripture: "Иак. 1:2–4",
+          verses: [
+            { num: 2, text: "Братья, когда вы сталкиваетесь с различного рода испытаниями, считайте это великой радостью." },
+            { num: 3, text: "Вы знаете, что испытание вашей веры вырабатывает стойкость," },
+            { num: 4, text: "а стойкость должна настолько возрасти в вас, чтобы вы стали зрелыми и цельными, без всяких недостатков." }
+          ],
+          questions: [
+            "Считаете ли вы, что испытания и трудности — это «великая радость»? Почему Писание говорит считать это «великой радостью», когда мы сталкиваемся с различными испытаниями?",
+            "Как испытания вырабатывают стойкость? Случалось ли вам испытывать это на себе?",
+            "Что значит быть «зрелым и цельным», и почему это важно?"
+          ]
+        }
+      },
+      sermon: {
+        en: {
+          title: "God's Secret in Our Weakness",
+          scripture: "2 Corinthians 12:7-10",
+          blanks: [
+            "To experience His __________ (v.7-9a)",
+            "To make us __________ (v.9b)",
+            "To change our __________ (v.10)"
+          ],
+          questions: [
+            "What image comes to mind when you think of 'weakness'? What do you consider your own weakness to be?",
+            "God allows us to experience His sufficient grace through our weaknesses. Why can suffering or weakness be a channel of grace? Let's share any experiences you've had of tasting grace through weakness.",
+            "God uses weakness to humble us. Why did Paul mention “pride” twice in this passage (verse 7)? Is there a specific situation or story where the Lord humbled you?",
+            "God changes our perspective through weakness. Considering the things Paul used to boast about (Philippians 3:4-7; Acts 22:3-5), how did his perspective change? What aspects of your perspective or thinking need the most change?"
+          ]
+        },
+        ru: {
+          title: "Секрет Бога в нашей слабости",
+          scripture: "2 Кор. 12:7–10",
+          blanks: [
+            "Чтобы познать Его __________ (ст. 7–9а)",
+            "Чтобы сделать нас __________ (ст. 9б)",
+            "Чтобы изменить наше __________ (ст. 10)"
+          ],
+          questions: [
+            "Какой образ приходит вам на ум, когда вы думаете о «слабости»? Что вы считаете своей собственной слабостью?",
+            "Бог позволяет нам испытать Его достаточную благодать через наши слабости. Почему страдание или слабость могут быть каналом благодати? Поделимся опытом, когда вы ощущали благодать через слабость.",
+            "Бог использует слабость, чтобы смирить нас. Почему Павел дважды упомянул «гордость» в этом отрывке (ст. 7)? Была ли в вашей жизни ситуация, когда Господь смирил вас?",
+            "Бог меняет наш взгляд через слабость. Вспоминая то, чем раньше хвалился Павел (Флп. 3:4–7; Деян. 22:3–5), как изменился его взгляд? Какие аспекты вашего мышления больше всего нуждаются в изменении?"
+          ]
+        }
+      }
+    },
+    "2026-08-27": { morning: null, sermon: null }
+  };
+
+  function pad(n) { return String(n).padStart(2, "0"); }
+
+  function fmt(t) {
+    const [h, m] = t.split(":").map(Number);
+    const ampm = h >= 12 ? "PM" : "AM";
+    let h12 = h % 12;
+    if (h12 === 0) h12 = 12;
+    return { h12, m, ampm };
+  }
+
+  function fmtRange(start, end) {
+    const s = fmt(start);
+    if (!end) return `${s.h12}:${pad(s.m)} ${s.ampm}`;
+    const e = fmt(end);
+    if (s.ampm === e.ampm) return `${s.h12}:${pad(s.m)}–${e.h12}:${pad(e.m)} ${e.ampm}`;
+    return `${s.h12}:${pad(s.m)} ${s.ampm} – ${e.h12}:${pad(e.m)} ${e.ampm}`;
+  }
+
+  function dayNum(iso) { return Number(iso.split("-")[2]); }
+
+  function buildDayTabs(container, onSelect) {
+    container.innerHTML = "";
+    DAYS.forEach((day, i) => {
+      const btn = document.createElement("button");
+      btn.className = "day-tab";
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-selected", "false");
+      btn.innerHTML = `<span class="wd">${day[LANG].abbr}</span><span class="num">${dayNum(day.date)}</span>`;
+      btn.addEventListener("click", () => onSelect(i));
+      container.appendChild(btn);
+    });
+  }
+
+  function selectDayTab(container, index) {
+    container.querySelectorAll(".day-tab").forEach((btn, i) => {
+      btn.setAttribute("aria-selected", i === index ? "true" : "false");
+    });
+  }
+
+  /* ---- Schedule view ---- */
+  const scheduleTabs = document.getElementById("scheduleTabs");
+  const scheduleMain = document.getElementById("scheduleMain");
+  let scheduleIndex = 0;
+
+  function renderSchedule(index) {
+    scheduleIndex = index;
+    selectDayTab(scheduleTabs, index);
+    const day = DAYS[index];
+    const events = SCHEDULE[day.date] || [];
+    const t = UI[LANG];
+    const items = events.map(ev => {
+      const dotVar = ev.cat === "meal" ? "--accent-warm" : ev.cat === "worship" ? "--accent" : "--muted";
+      return `<li class="event" style="--dot: var(${dotVar})">
+        <div class="time">${fmtRange(ev.time, ev.endTime)}</div>
+        <div class="title">${ev[LANG]}</div>
+      </li>`;
+    }).join("");
+
+    scheduleMain.innerHTML = `
+      <div class="view">
+        <p class="day-label">${day[LANG].label}</p>
+        <ul class="timeline">${items}</ul>
+        <div class="legend">
+          <span><i style="background:var(--accent)"></i>${t.legendWorship}</span>
+          <span><i style="background:var(--accent-warm)"></i>${t.legendMeals}</span>
+          <span><i style="background:var(--muted)"></i>${t.legendOther}</span>
+        </div>
+      </div>`;
+  }
+
+  /* ---- Devotionals view ---- */
+  const devoTabs = document.getElementById("devoTabs");
+  const devoMain = document.getElementById("devoMain");
+  const typeToggle = document.getElementById("typeToggle");
+  let devoIndex = 0;
+  let devoType = "sermon";
+
+  function renderBlank(text) {
+    return text.replace(/_{3,}/g, '<span class="blank"></span>');
+  }
+
+  function getAvailable(day) {
+    const entry = DEVOTIONALS[day.date] || {};
+    return { morning: !!entry.morning, sermon: !!entry.sermon };
+  }
+
+  function renderDevotionals() {
+    selectDayTab(devoTabs, devoIndex);
+
+    const day = DAYS[devoIndex];
+    const avail = getAvailable(day);
+    if (!avail[devoType]) {
+      if (avail.morning) devoType = "morning";
+      else if (avail.sermon) devoType = "sermon";
+    }
+
+    typeToggle.querySelectorAll(".type-btn").forEach(btn => {
+      const type = btn.dataset.type;
+      btn.disabled = !avail[type];
+      btn.setAttribute("aria-selected", type === devoType && avail[type] ? "true" : "false");
+    });
+
+    const entry = DEVOTIONALS[day.date] || {};
+    const contentSet = devoType === "morning" ? entry.morning : entry.sermon;
+    const content = contentSet ? contentSet[LANG] : null;
+
+    if (!content) {
+      devoMain.innerHTML = `
+        <div class="view">
+          <p class="day-label">${day[LANG].label}</p>
+        </div>`;
+      return;
+    }
+
+    const title = content.title ? `<h2 class="devo-title">${content.title}</h2>` : "";
+    const verses = content.verses
+      ? `<p class="devo-verses">${content.verses.map(v => `<sup class="vnum">${v.num}</sup>${v.text} `).join("")}</p>`
+      : "";
+    const blanks = content.blanks
+      ? `<ul class="devo-blanks">${content.blanks.map(b => `<li>${renderBlank(b)}</li>`).join("")}</ul>`
+      : "";
+    const questions = content.questions && content.questions.length
+      ? `<ol class="devo-questions">${content.questions.map((q, i) => `<li><span class="qnum">${i + 1}</span><span>${q}</span></li>`).join("")}</ol>`
+      : "";
+
+    devoMain.innerHTML = `
+      <div class="view">
+        <p class="day-label">${day[LANG].label}</p>
+        <div class="devo-card">
+          ${title}
+          <p class="devo-scripture">${content.scripture}</p>
+          ${verses}
+          ${blanks}
+          ${questions}
+        </div>
+      </div>`;
+  }
+
+  typeToggle.querySelectorAll(".type-btn").forEach(btn => {
+    btn.addEventListener("click", () => { devoType = btn.dataset.type; renderDevotionals(); });
+  });
+
+  /* ---- Bottom tab bar ---- */
+  const bottomTabs = document.getElementById("bottomTabs");
+  const viewSchedule = document.getElementById("view-schedule");
+  const viewDevotionals = document.getElementById("view-devotionals");
+  const eyebrow = document.getElementById("eyebrow");
+  let currentView = "schedule";
+
+  function setView(view) {
+    currentView = view;
+    bottomTabs.querySelectorAll(".bottom-tab").forEach(btn => {
+      btn.setAttribute("aria-selected", btn.dataset.view === view ? "true" : "false");
+    });
+    if (view === "schedule") {
+      viewSchedule.hidden = false;
+      viewDevotionals.hidden = true;
+      eyebrow.textContent = UI[LANG].eyebrowSchedule;
+    } else {
+      viewSchedule.hidden = true;
+      viewDevotionals.hidden = false;
+      eyebrow.textContent = UI[LANG].eyebrowDevotionals;
+    }
+    location.hash = `/${view}`;
+  }
+
+  bottomTabs.querySelectorAll(".bottom-tab").forEach(btn => {
+    btn.addEventListener("click", () => setView(btn.dataset.view));
+  });
+
+  /* ---- Language toggle ---- */
+  const langToggle = document.getElementById("langToggle");
+  const retreatNameEl = document.getElementById("retreatName");
+  const dateRangeEl = document.getElementById("dateRange");
+  const footerEl = document.getElementById("footerText");
+
+  function applyStaticText() {
+    const t = UI[LANG];
+    retreatNameEl.textContent = t.retreatName;
+    dateRangeEl.textContent = t.dateRange;
+    footerEl.textContent = t.footer;
+    document.querySelector('[data-view="schedule"] .label').textContent = t.tabSchedule;
+    document.querySelector('[data-view="devotionals"] .label').textContent = t.tabDevotionals;
+    document.querySelector('[data-type="morning"] span').textContent = t.typeMorning;
+    document.querySelector('[data-type="sermon"] span').textContent = t.typeSermon;
+    langToggle.textContent = LANG === "en" ? "RU" : "EN";
+    document.documentElement.lang = LANG;
+  }
+
+  function setLang(lang) {
+    LANG = lang;
+    applyStaticText();
+    buildDayTabs(scheduleTabs, renderSchedule);
+    buildDayTabs(devoTabs, i => { devoIndex = i; renderDevotionals(); });
+    renderSchedule(scheduleIndex);
+    renderDevotionals();
+    setView(currentView);
+  }
+
+  langToggle.addEventListener("click", () => setLang(LANG === "en" ? "ru" : "en"));
+
+  /* ---- Init ---- */
+  const today = "2026-08-21";
+  const startIndex = DAYS.findIndex(d => d.date === today);
+  devoIndex = startIndex === -1 ? 0 : startIndex;
+
+  applyStaticText();
+  buildDayTabs(scheduleTabs, renderSchedule);
+  buildDayTabs(devoTabs, i => { devoIndex = i; renderDevotionals(); });
+  renderSchedule(startIndex === -1 ? 0 : startIndex);
+  renderDevotionals();
+
+  const initialView = location.hash === "#/devotionals" ? "devotionals" : "schedule";
+  setView(initialView);
+</script>
